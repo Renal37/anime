@@ -20,7 +20,7 @@ session_start();
       href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
     />
   </head>
-<body>
+  <body class="dark_mode">
 <header>
     <div class="shadow">
       <div class="container">
@@ -36,39 +36,24 @@ session_start();
             </button>
           </div>
         </div>
-        <div id="form">
-          <form method="post" id="reg">
-            <div class="close" onclick="closes();"></div>
-            <h3>Регистрация</h3>
-            <input type="text" placeholder="Логин" name="login" />
-            <input type="password" placeholder="Пароль" name="password" />
-            <input type="submit" value="Нажмите" name="btn" />
-            <a onclick="avt();">Авторизация</a>
-          </form>
-          <form method="post" id="avt">
-            <div class="close" onclick="closes();"></div>
-            <h3>Авторизация</h3>
-            <input type="text" placeholder="Логин" name="login" />
-            <input type="password" placeholder="Пароль" name="password" />
-            <input type="submit" value="Нажмите" name="btn" />
-            <a onclick="opens();">Регистрация</a>
-          </form>
-        </div>
       </div>
     </div>
   </header>
   <div class="profile">
   <h1 class="profile">Данные</h1>
-    
-    <?php
-    echo'Привет!'. $_SESSION['login'].'<br>';
-    echo'<a href="avtor.php">Вернутся</a>';
-    ?>
-    <form method="post">
+  <?php
+      echo'Привет!'. $_SESSION['login'].'<br>';  
+  ?>
+  <form method="post">
         <input type="text" placeholder='login' name='new_login'>
         <input type="submit" value="Press" name='btn'>
     </form>
+    <div class="profile_a">
+    <?php
+    echo'<a href="user.php">Вернутся</a>';
+    ?>
     <a href='?del="'.$id.'"'>Удалить профиль</a>
+    </div>
   </div>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script src="./js/js,.js"></script>
@@ -80,9 +65,8 @@ require('bd.php');
 $id = $_SESSION['id'];
 if(isset($_POST['btn'])){
     $new_log=$link->real_escape_string($_POST['new_login']);
-    $role=$link->real_escape_string($_POST['role']);
-    $update="UPDATE user SET login='$new_log' WHERE id=$id";
-    if(mysqli_query($link,$update,$roles)){
+    $update="UPDATE user SET login='$new_log' WHERE id_user=$id";
+    if(mysqli_query($link,$update)){
         $_SESSION['login']=$new_log;
         echo'Логин успешно изменен!';
     }else{
@@ -93,16 +77,13 @@ else{
     echo'error';
 }
 
-
-
-
 if(isset($_GET['del'])){
-$del="DELETE FROM user WHERE id= '$id' ";
+$del="DELETE FROM user WHERE id_user='$id' ";
 if($link->query($del)){    
-    header("Location: regis.php");
+    header("Location: index.php");
 }
 else{
-    echo "Ошибкa";
+    echo "Ошибкa" ;
 }
 }
 ?>

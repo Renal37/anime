@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,8 +13,8 @@
   <link rel="stylesheet prefetch" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
 </head>
 
-<body>
-  <div id="div"></div>
+<body class="dark_mode">
+  <div id="div" onclick="closes();"></div>
   <header>
     <div class="shadow">
       <div class="container">
@@ -22,10 +25,6 @@
             </a>
           </div>
           <nav>
-            <ul class="ul">
-              <li><a href="#">Tоп</a></li>
-              <li><a href="#">Рейтинг</a></li>
-            </ul>
           </nav>
           <div class="left_header">
             <button onclick="opens();">
@@ -48,9 +47,9 @@
           <form method="post" id="avt">
             <div class="close" onclick="closes();"></div>
             <h3>Авторизация</h3>
-            <input type="text" placeholder="Логин" name="login" />
-            <input type="password" placeholder="Пароль" name="password" />
-            <input type="submit" value="Нажмите" name="btn" />
+            <input type="text" placeholder="Логин" name="avt_login" />
+            <input type="password" placeholder="Пароль" name="avt_password" />
+            <input type="submit" value="Нажмите" name="btns" />
             <a onclick="opens();">Регистрация</a>
           </form>
         </div>
@@ -59,6 +58,7 @@
   </header>
 
   <main>
+
     <div class="container">
       <section class="main_top">
         <h1>ТОП</h1>
@@ -66,15 +66,15 @@
           <div class="slider">
             <div class="bg bg1" style="display: block">
               <h3>BLEACH</h3>
-              <p> <img src="./image/star.svg" alt="">9.7/10</p>
+              <!-- <p> <img src="./image/star.svg" alt="">9.7/10</p> -->
             </div>
             <div class="bg bg2" style="display: none">
               <h3>EVANGELION</h3>
-              <p><img src="./image/star.svg" alt="">9.5/10</p>
+              <!-- <p><img src="./image/star.svg" alt="">9.5/10</p> -->
             </div>
             <div class="bg bg3" style="display: none">
               <h3>ONE PIECE</h3>
-              <p><img src="./image/star.svg" alt="">9.3/10</p>
+              <!-- <p><img src="./image/star.svg" alt="">9.3/10</p> -->
             </div>
           </div>
           <button class="prev-button" aria-label="Посмотреть предыдущий слайд">
@@ -94,21 +94,22 @@
             </div>
             <div class="swiper mySwiper">
               <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="https://animego.org/media/cache/thumbs_444x250/upload/anime/images/5a743e80501d5.jpg">
-                  <h2>Код Гиас</h2>
-                </div>
-                <div class="swiper-slide"><img src="https://animego.org/media/cache/thumbs_444x250/upload/anime/images/615b6b44a9375301088997.jpg" alt="">
-                  <h2>Восемьдесят шесть</h2>
-                </div>
-                <div class="swiper-slide"><img src="https://animego.org/media/cache/thumbs_444x250/upload/anime/images/5c4a436f3d1c9791360754.jpg" alt="">
-                  <h2>Гуррен-Лаганн</h2>
-                </div>
-                <div class="swiper-slide"><img src="https://animego.org/media/cache/thumbs_444x250/upload/anime/images/6004141dea2a5318480933.jpg" alt="">
-                  <h2>Созданный в Бездне</h2>
-                </div>
-                <div class="swiper-slide"><img src="https://animego.org/media/cache/thumbs_444x250/upload/anime/images/5a47ce9941591.jpg" alt="">
-                  <h2>Врата Штейна</h2>
-                </div>
+                <?php
+                require('bd.php');
+                $sql = 'SELECT * FROM anime where id_rung=  1 ORDER BY top DESC';
+                $result = $link->query($sql);
+                if ($result->num_rows > 0) {
+                  while ($row = $result->fetch_assoc()) {
+
+                ?>
+                    <div class="swiper-slide"><img src="./image/<?php echo $row['img'] ?>">
+                      <h2><?php echo $row['name'] ?></h2>
+                      <p class="reting"><img src="./image/star.svg" alt=""><?php echo $row['top'] ?></p>
+                    </div>
+                <?php
+                  }
+                }
+                ?>
               </div>
               <div class="swiper-pagination"></div>
             </div>
@@ -119,21 +120,22 @@
             </div>
             <div class="swiper mySwiper">
               <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="https://animego.org/media/cache/thumbs_444x250/upload/anime/images/5ad264d804653399281331.jpg" alt="">
-                  <h2>Крутой учитель Онидзука</h2>
-                </div>
-                <div class="swiper-slide"><img src="https://animego.org/media/cache/thumbs_444x250/upload/anime/images/5b570e8f1fae1827077768.jpg" alt="">
-                  <h2>Необъятный океан</h2>
-                </div>
-                <div class="swiper-slide"><img src="https://animego.org/media/cache/thumbs_444x250/upload/anime/images/5a47acc35b9d9.jpg" alt="">
-                  <h2>Стальной алхимик</h2>
-                </div>
-                <div class="swiper-slide"><img src="https://animego.org/media/cache/thumbs_444x250/upload/anime/images/6004141dea2a5318480933.jpg" alt="">
-                  <h2>Созданный в Бездне</h2>
-                </div>
-                <div class="swiper-slide"><img src="https://animego.org/media/cache/thumbs_444x250/upload/anime/images/5a47ce9941591.jpg" alt="">
-                  <h2>Врата Штейна</h2>
-                </div>
+                <?php
+                require('bd.php');
+                $sql = 'SELECT * FROM anime where id_rung=  2 ORDER BY top DESC';
+                $result = $link->query($sql);
+                if ($result->num_rows > 0) {
+                  while ($row = $result->fetch_assoc()) {
+
+                ?>
+                    <div class="swiper-slide"><img src="./image/<?php echo $row['img'] ?>">
+                      <h2><?php echo $row['name'] ?></h2>
+                      <p class="reting"><img src="./image/star.svg" alt=""><?php echo $row['top'] ?></p>
+                    </div>
+                <?php
+                  }
+                }
+                ?>
               </div>
               <div class="swiper-pagination"></div>
             </div>
@@ -144,21 +146,22 @@
             </div>
             <div class="swiper mySwiper">
               <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="https://animego.org/media/cache/thumbs_444x250/upload/anime/images/5a743e80501d5.jpg" alt="">
-                  <h2>Код Гиас</h2>
-                </div>
-                <div class="swiper-slide"><img src="https://animego.org/media/cache/thumbs_444x250/upload/anime/images/615b6b44a9375301088997.jpg" alt="">
-                  <h2>Восемьдесят шесть</h2>
-                </div>
-                <div class="swiper-slide"><img src="https://animego.org/media/cache/thumbs_444x250/upload/anime/images/5c4a436f3d1c9791360754.jpg" alt="">
-                  <h2>Гуррен-Лаганн</h2>
-                </div>
-                <div class="swiper-slide"><img src="https://animego.org/media/cache/thumbs_444x250/upload/anime/images/6004141dea2a5318480933.jpg" alt="">
-                  <h2>Созданный в Бездне</h2>
-                </div>
-                <div class="swiper-slide"><img src="https://animego.org/media/cache/thumbs_444x250/upload/anime/images/5a47ce9941591.jpg" alt="">
-                  <h2>Врата Штейна</h2>
-                </div>
+                <?php
+                require('bd.php');
+                $sql = 'SELECT * FROM anime where id_rung=  3 ORDER BY top DESC';
+                $result = $link->query($sql);
+                if ($result->num_rows > 0) {
+                  while ($row = $result->fetch_assoc()) {
+
+                ?>
+                    <div class="swiper-slide"><img src="./image/<?php echo $row['img'] ?>">
+                      <h2><?php echo $row['name'] ?></h2>
+                      <p class="reting"><img src="./image/star.svg" alt=""><?php echo $row['top'] ?></p>
+                    </div>
+                <?php
+                  }
+                }
+                ?>
               </div>
               <div class="swiper-pagination"></div>
             </div>
@@ -167,35 +170,50 @@
       </section>
     </div>
   </main>
+  
+  <?php
+  require('bd.php');
+  if (isset($_POST['btn'])) {
+    $login = $link->real_escape_string($_POST['login']);
+    $password = $link->real_escape_string(md5($_POST['password']));
+    $result = mysqli_query($link, "SELECT * FROM user where login = '$login'");
+    $row = mysqli_num_rows($result);
+    if ($row == 1) {
+      echo "<p class='info'>Пользователь уже существует</p>";
+    } else {
+      $sql = "INSERT INTO user (login,password) values('$login', '$password')";
+      if ($link->query($sql)) {
+        echo "<p class='info'>Вы успешно зарегистрированы</p>";
+      } else {
+        // echo "Ошибка: ";
+      };
+    }
+  } else {
+    // echo "Ошибка";
+  }
+  if (isset($_POST['btns'])) {
+    $loginavt = $link->real_escape_string($_POST['avt_login']);
+    $passwordavt = $link->real_escape_string(md5($_POST['avt_password']));
+    if ($loginavt == 'admin' && $_POST['avt_password'] == 'admin') {
+      echo '<script>window.location="admin.php";</script>';
+    } else {
+      $result = mysqli_query($link, "SELECT * FROM user where login = '$loginavt' && password = '$passwordavt'");
+      if (mysqli_num_rows($result) == 1) {
+        foreach ($result as $prov) {
+          $_SESSION['id'] = $prov['id_user'];
+          $_SESSION['login'] = $prov['login'];
+        }
+        echo '<script>window.location="user.php";</script>';
+      } else {
+        echo 'Неверные учетные данные';
+      }
+    }
+  } else {
+    // echo "Ошибка";
+  }
+  ?>
   <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
   <script src="./js/js,.js"></script>
-  <!-- <?php
-        $link = mysqli_connect('localhost', 'root', '123', 'anime');
-        if (!$link) {
-          die('Ошибка');
-        } else {
-          echo 'Подключено';
-        }
-        if (isset($_POST['btn'])) {
-          $login = $link->real_escape_string($_POST['login']);
-          $password = $link->real_escape_string(md5($_POST['password']));
-          $result = mysqli_query($link, "SELECT * FROM user where login = '$login'");
-          $row = mysqli_num_rows($result);
-          if ($row == 1) {
-            echo "Пользователь уже существует";
-          } else {
-            $sql = "INSERT INTO user (login,password) values('$login', '$password')";
-            if ($link->query($sql)) {
-              echo "Вы успешно зарегистрированы";
-            } else {
-              echo "Ошибка: ";
-            };
-          }
-        } else {
-          echo "Ошибка";
-        }
-
-        ?> -->
 </body>
 
 </html>

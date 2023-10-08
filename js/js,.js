@@ -40,20 +40,27 @@ let swiper = new Swiper(".mySwiper", {
   let avtor = document.getElementById('avt')
   let body = document.body
   let div = document.getElementById('div')
+  let con = document.querySelector('.container')
+  let info = document.querySelector('.info')
 function opens(){
   reg.style.visibility ='visible';
-  div.classList.add('blure')
+  div.classList.add('blure');
+  
   avtor.style.visibility = 'hidden';
+  info.style.visibility = 'visible';
 }
 function closes(){
   form.style.visibility = 'hidden';
   avtor.style.visibility = 'hidden';
   reg.style.visibility = 'hidden';
-  div.classList.remove('blure')
+  div.classList.remove('blure');
+  info.style.visibility = 'hidden';
 }
 function avt(){
   avtor.style.visibility ='visible';
   reg.style.visibility = 'hidden';
+  info.style.visibility = 'visible';
+  div.classList.add('blure');
 }
 const slider = document.querySelector('.slider');
 const prevButton = document.querySelector('.prev-button');
@@ -83,3 +90,5 @@ function updateSlider() {
     }
   });
 }
+
+
